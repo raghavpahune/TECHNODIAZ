@@ -92,14 +92,23 @@ export const Navbar = ({ onOpenAdmin, onOpenRegister, onScrollTo }) => {
         {/* Live Countdown Clock */}
         <div className="hidden xl:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#081a0e]/90 border border-[#00ff88]/30 shadow-inner text-xs font-mono">
           <Calendar className="w-3.5 h-3.5 text-[#00ff88]" />
-          <span className="text-emerald-400 font-semibold">Fest In:</span>
-          <span className="text-white font-bold">{timeLeft.days}d</span>
-          <span className="text-emerald-500">:</span>
-          <span className="text-white font-bold">{timeLeft.hours}h</span>
-          <span className="text-emerald-500">:</span>
-          <span className="text-white font-bold">{timeLeft.minutes}m</span>
-          <span className="text-emerald-500">:</span>
-          <span className="text-[#00ff88] font-bold">{timeLeft.seconds}s</span>
+          {timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0 ? (
+            <span className="text-[#00ff88] font-bold flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#00ff88] animate-ping" />
+              FEST LIVE NOW
+            </span>
+          ) : (
+            <>
+              <span className="text-emerald-400 font-semibold">Fest In:</span>
+              <span className="text-white font-bold">{timeLeft.days}d</span>
+              <span className="text-emerald-500">:</span>
+              <span className="text-white font-bold">{timeLeft.hours}h</span>
+              <span className="text-emerald-500">:</span>
+              <span className="text-white font-bold">{timeLeft.minutes}m</span>
+              <span className="text-emerald-500">:</span>
+              <span className="text-[#00ff88] font-bold">{timeLeft.seconds}s</span>
+            </>
+          )}
         </div>
 
         {/* Desktop Links */}
@@ -159,9 +168,16 @@ export const Navbar = ({ onOpenAdmin, onOpenRegister, onScrollTo }) => {
       {mobileMenuOpen && (
         <div className="lg:hidden bg-[#06140a]/98 border-b border-[#00ff88]/30 px-6 py-5 mt-2 space-y-3 shadow-2xl animate-in slide-in-from-top">
           <div className="flex items-center justify-between pb-3 border-b border-emerald-900/50">
-            <span className="text-xs font-mono text-emerald-400">Fest Countdown:</span>
-            <span className="text-xs font-bold font-mono text-[#00ff88]">
-              {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
+            <span className="text-xs font-mono text-emerald-400">Fest Status:</span>
+            <span className="text-xs font-bold font-mono text-[#00ff88] flex items-center gap-1">
+              {timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0 ? (
+                <>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00ff88] animate-ping" />
+                  FEST LIVE NOW
+                </>
+              ) : (
+                `${timeLeft.days}d ${timeLeft.hours}h ${timeLeft.minutes}m ${timeLeft.seconds}s`
+              )}
             </span>
           </div>
           <div className="grid grid-cols-2 gap-2 pt-1">
