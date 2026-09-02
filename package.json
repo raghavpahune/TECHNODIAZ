@@ -7,5 +7,11 @@
     "dev": "node run_all.js",
     "backend": "cd backend && npm start",
     "frontend": "cd frontend && npm run dev"
+  },
+  "devDependencies": {
+    "prisma": "^6.4.1"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.4.1"
   }
 }

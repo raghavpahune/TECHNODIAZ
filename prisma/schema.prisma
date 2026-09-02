@@ -1,0 +1,424 @@
+// ====================================================================
+// 🌿 TECHNODIAZ 2k26 — Comprehensive Prisma Schema
+// "Where Nature Meets Innovation" — PBCOE CSE Department
+// ====================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// --------------------------------------------------------------------
+// ENUMS
+// --------------------------------------------------------------------
+
+enum UserRole {
+  STUDENT
+  ADMIN
+  FACULTY
+  SUPERADMIN
+}
+
+enum AcademicYear {
+  FIRST_YEAR  @map("1st Year")
+  SECOND_YEAR @map("2nd Year")
+  THIRD_YEAR  @map("3rd Year")
+  FOURTH_YEAR @map("4th Year")
+  FACULTY     @map("Faculty")
+  OTHER       @map("Other")
+}
+
+enum EventType {
+  TECHNICAL
+  SPORTS
+}
+
+enum EventCategory {
+  IDEASTORM_PITCHING    @map("IdeaStorm (Innovation Pitching)")
+  TECHCANVAS_HACKATHON  @map("TechCanvas (Web & UI/UX Hackathon)")
+  QUIZ_QUEST            @map("Mega College Quiz Quest")
+  CODERELAY_HACKATHON   @map("CodeRelay Hackathon")
+  AIML_PROJECT_SHOWCASE @map("AI & ML Project Showcase")
+  CYBER_BATTLE_LAN      @map("Cyber Battle (LAN Gaming)")
+  BOX_CRICKET           @map("Box Cricket Championship")
+  FUTSAL_ARENA          @map("Futsal Arena")
+  CHESS_MASTERS         @map("Chess Masters")
+  BADMINTON_CLASH       @map("Badminton Clash")
+  TUG_OF_WAR            @map("Tug of War")
+}
+
+enum ChallengeCategory {
+  LOGIC           @map("Logic")
+  ARRAYS          @map("Arrays")
+  ALGORITHMS      @map("Algorithms")
+  DATA_STRUCTURES @map("Data Structures")
+  GREEN_TECH      @map("Green Tech")
+  AI_ML           @map("AI/ML")
+  GENERAL         @map("General")
+}
+
+enum DifficultyLevel {
+  EASY   @map("Easy")
+  MEDIUM @map("Medium")
+  HARD   @map("Hard")
+}
+
+enum SubmissionType {
+  CODE
+  TEXT
+  MCQ
+}
+
+enum SubmissionStatus {
+  PENDING           @map("Pending")
+  ACCEPTED          @map("Accepted")
+  WRONG_ANSWER      @map("Wrong Answer")
+  PARTIALLY_CORRECT @map("Partially Correct")
+  REJECTED          @map("Rejected")
+}
+
+enum NoticeCategory {
+  GENERAL   @map("General")
+  TECHNICAL @map("Technical")
+  SPORTS    @map("Sports")
+  URGENT    @map("Urgent")
+  WORKSHOPS @map("Workshops")
+  RESULTS   @map("Results")
+}
+
+// --------------------------------------------------------------------
+// USER & COMMITTEE AUTHENTICATION
+// --------------------------------------------------------------------
+
+model User {
+  id           String       @id @default(uuid())
+  name         String
+  email        String       @unique
+  passwordHash String
+  mobile       String
+  college      String       @default("PBCOE Nagpur")
+  branch       String       @default("Computer Science & Engineering")
+  year         AcademicYear @default(THIRD_YEAR)
+  rollNumber   String
+  role         UserRole     @default(STUDENT)
+  avatarUrl    String?
+
+  // Competitive Coding Metrics
+  score          Int @default(0)
+  solvedCount    Int @default(0)
+  attemptedCount Int @default(0)
+
+  // Relations
+  submissions    Submission[] @relation("UserSubmissions")
+  evaluatedSubs  Submission[] @relation("EvaluatedSubmissions")
+  createdNotices Notice[]     @relation("UserNotices")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([score(sort: Desc)])
+  @@map("users")
+}
+
+model AdminCommittee {
+  id           String   @id @default(uuid())
+  username     String   @unique
+  passwordHash String
+  name         String
+  designation  String // e.g., 'President', 'Event Head', 'Technical Head', 'Discipline Head'
+  role         UserRole @default(ADMIN)
+  avatar       String?
+  createdAt    DateTime @default(now())
+
+  @@map("admin_committee")
+}
+
+// --------------------------------------------------------------------
+// TEAM REGISTRATION & GATE PASS VERIFICATION
+// --------------------------------------------------------------------
+
+model Team {
+  id             String        @id @default(uuid())
+  registrationId String        @unique // e.g., 'TECH-2026-4748'
+  teamName       String
+  eventCategory  EventCategory
+  eventType      EventType     @default(TECHNICAL)
+
+  leaderName  String
+  leaderEmail String
+  leaderPhone String
+  collegeName String @default("PBCOE Nagpur")
+  department  String @default("Computer Science & Engineering")
+  yearOfStudy String @default("3rd Year")
+
+  // Gate Verification
+  verified   Boolean   @default(false)
+  verifiedAt DateTime?
+  verifiedBy String? // Verifier Admin Name
+  qrCodeData String    @db.Text // Encoded QR token
+
+  // Dynamic Roster Members
+  members TeamMember[]
+
+  registeredAt DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([registrationId])
+  @@index([eventCategory])
+  @@index([verified])
+  @@map("teams")
+}
+
+model TeamMember {
+  id     String @id @default(uuid())
+  teamId String
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  name  String
+  email String?
+  phone String?
+  role  String  @default("Member") // 'Leader', 'Coder', 'Pitcher', etc.
+
+  createdAt DateTime @default(now())
+
+  @@index([teamId])
+  @@map("team_members")
+}
+
+// --------------------------------------------------------------------
+// CODING CHALLENGES & ARENA
+// --------------------------------------------------------------------
+
+model Challenge {
+  id             String            @id @default(uuid())
+  challengeId    String            @unique // e.g., 'TECH-CHG-001'
+  title          String
+  category       ChallengeCategory @default(LOGIC)
+  difficulty     DifficultyLevel   @default(EASY)
+  points         Int               @default(10)
+  timeLimit      String            @default("30 mins")
+  submissionType SubmissionType    @default(CODE)
+
+  description      String   @db.Text
+  problemStatement String   @db.Text
+  constraints      String[] @default([])
+  tags             String[] @default([])
+
+  // Starter code snippets per language
+  starterCode  Json? // { cpp: string, java: string, python: string, javascript: string }
+  solutionCode String? @db.Text
+  explanation  String? @db.Text
+
+  // Daily Challenge Quick Verification
+  correctOption String? // For MCQ/Wall Magazine daily challenge (e.g., '3')
+
+  // Relational Components
+  examples    ChallengeExample[]
+  testCases   TestCase[]
+  mcqOptions  McqOption[]
+  submissions Submission[]
+
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@index([difficulty])
+  @@index([challengeId])
+  @@map("challenges")
+}
+
+model ChallengeExample {
+  id          String    @id @default(uuid())
+  challengeId String
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  input       String  @db.Text
+  output      String  @db.Text
+  explanation String? @db.Text
+
+  @@index([challengeId])
+  @@map("challenge_examples")
+}
+
+model TestCase {
+  id          String    @id @default(uuid())
+  challengeId String
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  input          String  @db.Text
+  expectedOutput String  @db.Text
+  isHidden       Boolean @default(false)
+
+  @@index([challengeId])
+  @@map("challenge_test_cases")
+}
+
+model McqOption {
+  id          String    @id @default(uuid())
+  challengeId String
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  key       String // 'A', 'B', 'C', 'D'
+  text      String
+  isCorrect Boolean @default(false)
+
+  @@index([challengeId])
+  @@map("mcq_options")
+}
+
+// --------------------------------------------------------------------
+// CODE SUBMISSIONS & EVALUATION
+// --------------------------------------------------------------------
+
+model Submission {
+  id           String @id @default(uuid())
+  submissionId String @unique // e.g., 'SUB-2026-9812'
+
+  userId String
+  user   User   @relation("UserSubmissions", fields: [userId], references: [id], onDelete: Cascade)
+
+  challengeId String
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  submissionType SubmissionType @default(CODE)
+  language       String         @default("python") // 'python', 'cpp', 'java', 'javascript'
+
+  code           String? @db.Text
+  answer         String? @db.Text
+  selectedOption String?
+
+  status   SubmissionStatus @default(PENDING)
+  score    Int              @default(0)
+  maxScore Int              @default(10)
+  feedback String?          @db.Text
+
+  compilationStatus String  @default("Submitted")
+  executionTime     String?
+  memoryUsed        String?
+
+  // Evaluation by Faculty/Admin
+  evaluatedById String?
+  evaluatedBy   User?     @relation("EvaluatedSubmissions", fields: [evaluatedById], references: [id])
+  evaluatedAt   DateTime?
+
+  testResults TestResult[]
+
+  submittedAt DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@index([challengeId])
+  @@index([status])
+  @@map("submissions")
+}
+
+model TestResult {
+  id           String     @id @default(uuid())
+  submissionId String
+  submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+
+  testCaseIndex   Int
+  passed          Boolean
+  input           String? @db.Text
+  expectedOutput  String? @db.Text
+  actualOutput    String? @db.Text
+  executionTimeMs Float?
+  memoryKb        Float?
+  error           String? @db.Text
+
+  @@index([submissionId])
+  @@map("submission_test_results")
+}
+
+// --------------------------------------------------------------------
+// NOTICES, EVENTS & FESTIVAL CONTENT
+// --------------------------------------------------------------------
+
+model Notice {
+  id       String         @id @default(uuid())
+  title    String
+  content  String         @db.Text
+  category NoticeCategory @default(GENERAL)
+  isUrgent Boolean        @default(false)
+  author   String         @default("CSE TechFest Committee")
+
+  createdById String?
+  createdBy   User?   @relation("UserNotices", fields: [createdById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@index([isUrgent])
+  @@map("notices")
+}
+
+model Event {
+  id               String   @id @default(uuid())
+  eventId          String   @unique // e.g., 'EVT-IDEASTORM'
+  title            String
+  category         String // 'Technical', 'Sports', 'Hackathon'
+  date             DateTime
+  time             String // '10:00 AM - 01:00 PM'
+  venue            String // 'CSE Auditorium / Lab 1'
+  coordinator      String
+  prizePool        String // '₹15,000 + Trophies'
+  description      String   @db.Text
+  rules            String[] @default([])
+  registrationOpen Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([eventId])
+  @@map("events")
+}
+
+model StudentProject {
+  id          String   @id @default(uuid())
+  title       String
+  teamName    String
+  authors     String[] @default([])
+  category    String // 'Green AI', 'IoT', 'Bio-Computing'
+  description String   @db.Text
+  techStack   String[] @default([])
+  githubUrl   String?
+  demoUrl     String?
+  imageUrl    String?
+
+  createdAt DateTime @default(now())
+
+  @@map("student_projects")
+}
+
+model TechNewsArticle {
+  id          String   @id @default(uuid())
+  title       String
+  summary     String   @db.Text
+  source      String
+  url         String
+  category    String   @default("AI & Green Tech")
+  imageUrl    String?
+  publishedAt DateTime @default(now())
+
+  @@map("tech_news_articles")
+}
+
+model MetricAchievement {
+  id        String  @id @default(uuid())
+  metricKey String  @unique // e.g., 'TOTAL_TEAMS', 'CODE_SUBMISSIONS'
+  label     String
+  count     Int     @default(0)
+  suffix    String? @default("+")
+  iconName  String?
+
+  updatedAt DateTime @updatedAt
+
+  @@map("metric_achievements")
+}
