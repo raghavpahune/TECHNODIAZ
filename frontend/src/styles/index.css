@@ -1,0 +1,148 @@
+@import './theme.css';
+
+/* Utility classes & layout helpers */
+.grid-fest-board {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .grid-fest-board {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Typography styles */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-brand {
+  font-family: var(--font-brand);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Badges */
+.badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+
+.badge-urgent {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.badge-technical {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.badge-sports {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.badge-green {
+  background: rgba(0, 255, 136, 0.15);
+  color: var(--neon-green);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+/* Modal styling */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 8, 4, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: linear-gradient(170deg, #091a10 0%, #050f08 100%);
+  border: 2px solid var(--neon-green);
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 255, 136, 0.3);
+  max-width: 750px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 2rem;
+}
+
+/* Holographic Digital Pass */
+.ticket-card {
+  background: linear-gradient(135deg, #081a0e 0%, #153822 50%, #081a0e 100%);
+  border: 2px solid #00ff88;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 255, 136, 0.25), 0 20px 50px rgba(0,0,0,0.8);
+}
+
+.ticket-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 45%,
+    rgba(0, 255, 136, 0.1) 48%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(0, 240, 255, 0.1) 52%,
+    transparent 55%
+  );
+  transform: rotate(30deg);
+  animation: shineFoil 6s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes shineFoil {
+  0% { transform: translateY(-100%) rotate(30deg); }
+  30%, 100% { transform: translateY(100%) rotate(30deg); }
+}
+
+/* QR Scanner Box */
+#qr-reader {
+  width: 100% !important;
+  border: none !important;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #040c06 !important;
+}
+
+#qr-reader__scan_region {
+  background: #040c06;
+}
+
+#qr-reader__dashboard_section_csr button {
+  background: var(--neon-green) !important;
+  color: #031409 !important;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}

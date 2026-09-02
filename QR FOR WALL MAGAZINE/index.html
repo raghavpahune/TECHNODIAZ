@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TECHNODIAZ 2K26 | Wall Magazine Coding Challenge</title>
+  <meta name="description" content="Official Coding Challenge Submission Portal for Technodiaz 2k26 Wall Magazine - Department of Computer Science & Engineering. Solve the algorithm, submit your answer, and win exciting prizes!">
+  <meta name="theme-color" content="#060e09">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+</head>
+<body>
+  <!-- Ambient glow & circuit backgrounds -->
+  <div class="circuit-overlay"></div>
+  <div class="ambient-glow-tree"></div>
+
+  <div class="container">
+    <!-- Navigation Bar -->
+    <header class="navbar">
+      <a href="index.html" class="nav-brand">
+        <img src="assets/technodiaz_tree.jpg" alt="Technodiaz Tree Logo" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--border-neon); object-fit: cover;">
+        <div class="nav-title-group">
+          <h1>TECHNODIAZ 2K26</h1>
+          <p>Dept. of Computer Science &amp; Engineering</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="#challenge" class="nav-btn active">Challenge</a>
+        <a href="qr-generator.html" class="nav-btn">Wall QR Code</a>
+        <a href="admin.html" class="nav-btn">Admin Portal</a>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div style="margin-bottom: 1.5rem;">
+        <img src="assets/technodiaz_tree.jpg" alt="Technodiaz Cyber Tree" style="width: 130px; height: 130px; border-radius: 50%; border: 2px solid var(--neon-green); box-shadow: 0 0 35px rgba(0,255,135,0.4); object-fit: cover; animation: pulse-border 3s infinite ease-in-out;">
+      </div>
+      <div class="badge-tag">
+        <span>⚡</span> LIVE WALL MAGAZINE CHALLENGE • WIN EXCITING PRIZES
+      </div>
+      <h2 class="hero-title">
+        Where Nature Meets <span class="glow-green">Innovation</span>
+      </h2>
+      <p class="hero-subtitle">"The future is DIGITAL but its roots are GREEN"</p>
+      <p class="hero-dept">Welcome to the official digital portal for the CSE Department Wall Magazine. Scan the QR, solve the code challenge below, and verify your submission instantly!</p>
+
+      <!-- Nature-Tech Motto Ribbon -->
+      <div class="nature-tech-ribbon">
+        <div class="ribbon-item">
+          <span>🌱</span>
+          <span>Sustainable Computing</span>
+        </div>
+        <div class="ribbon-item">
+          <span>🤖</span>
+          <span>AI for Good &amp; Climate</span>
+        </div>
+        <div class="ribbon-item">
+          <span>💻</span>
+          <span>Live Submissions: <strong id="live-submissions-count" style="color: var(--neon-green);">...</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Challenge & Submission Grid -->
+    <div class="challenge-grid" id="challenge">
+      <!-- Left Column: Code Problem & Explanation -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-title-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Coding Challenge</h3>
+              <p style="font-size: 0.8rem; color: var(--neon-leaf);">Wall Magazine Problem Spotlight</p>
+            </div>
+          </div>
+          <span class="card-badge">Algorithm</span>
+        </div>
+
+        <div class="code-window">
+          <div class="code-window-header">
+            <div class="window-dots">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+            </div>
+            <span class="window-filename">missing_number.py</span>
+            <button class="btn-copy" id="btn-copy-code" title="Copy code">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              Copy
+            </button>
+          </div>
+          <pre class="code-pre"><code><span class="cm"># Can you solve it?</span>
+<span class="kw">def</span> <span class="fn">missing_num</span>(<span class="var">nums</span>):
+    <span class="var">n</span> <span class="op">=</span> <span class="fn">len</span>(<span class="var">nums</span>) <span class="op">+</span> <span class="num">1</span>
+    <span class="var">total</span> <span class="op">=</span> <span class="var">n</span> <span class="op">*</span> (<span class="var">n</span> <span class="op">+</span> <span class="num">1</span>) <span class="op">//</span> <span class="num">2</span>
+    <span class="kw">return</span> <span class="var">total</span> <span class="op">-</span> <span class="fn">sum</span>(<span class="var">nums</span>)
+
+<span class="cm"># What will be the output for:</span>
+<span class="var">nums</span> <span class="op">=</span> [<span class="num">1</span>, <span class="num">2</span>, <span class="num">4</span>, <span class="num">5</span>, <span class="num">6</span>]</code></pre>
+        </div>
+
+        <div class="challenge-prompt-box">
+          <h4>
+            <span>❓</span> Challenge Question:
+          </h4>
+          <p>What integer value will the function <code>missing_num([1, 2, 4, 5, 6])</code> return?</p>
+          <div class="highlight-input">Target Array: [1, 2, 4, 5, 6]</div>
+        </div>
+
+        <!-- Interactive Hint & Step-by-Step Accordion -->
+        <div class="interactive-accordions">
+          <button class="accordion-toggle" type="button">
+            <span>💡 How the Mathematical Formula Works</span>
+            <span class="acc-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <p><strong>Gauss Summation Formula:</strong> The sum of the first <code>n</code> natural numbers is given by <code>n * (n + 1) / 2</code>.</p>
+            <p style="margin-top: 6px;">Here, since one number is missing from the sequential list of 6 numbers, <code>n = len(nums) + 1 = 6</code>.</p>
+            <p style="margin-top: 6px;">Expected sum of numbers 1 to 6 = <code>(6 * 7) / 2 = 21</code>.</p>
+            <p style="margin-top: 6px;">Actual sum of given elements = <code>1 + 2 + 4 + 5 + 6 = 18</code>.</p>
+            <p style="margin-top: 6px; color: var(--neon-green); font-weight: 700;">Difference = 21 - 18 = ?</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Submission Form & Digital Pass -->
+      <div class="glass-card">
+        <!-- Participant Submission Form Section -->
+        <div id="form-section">
+          <div class="card-header">
+            <div class="card-title-group">
+              <div class="card-title-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+              <div>
+                <h3 class="card-title">Submit Your Answer</h3>
+                <p style="font-size: 0.8rem; color: var(--neon-leaf);">Claim your prize verification token</p>
+              </div>
+            </div>
+            <span class="card-badge" style="background: rgba(0,255,135,0.15); color: var(--neon-green); border-color: rgba(0,255,135,0.4);">Instant Pass</span>
+          </div>
+
+          <form id="challenge-form">
+            <div class="form-group">
+              <label class="form-label" for="user-name">Full Name <span class="req">*</span></label>
+              <div class="input-with-icon">
+                <span class="input-icon">👤</span>
+                <input type="text" id="user-name" class="form-control" placeholder="e.g. John Doe" required>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label" for="user-roll">Roll No / Student ID <span class="req">*</span></label>
+                <div class="input-with-icon">
+                  <span class="input-icon">🏷️</span>
+                  <input type="text" id="user-roll" class="form-control" placeholder="e.g. 23CSE042" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="user-dept">Department <span class="req">*</span></label>
+                <div class="input-with-icon">
+                  <span class="input-icon">🏛️</span>
+                  <select id="user-dept" class="form-control" style="background:#05120a;" required>
+                    <option value="CSE" selected>CSE</option>
+                    <option value="AI & ML">AI & ML</option>
+                    <option value="IT">IT</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="ECE">ECE</option>
+                    <option value="EEE">EEE</option>
+                    <option value="Other">Other Branch</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label" for="user-year">Academic Year <span class="req">*</span></label>
+                <div class="input-with-icon">
+                  <span class="input-icon">🎓</span>
+                  <select id="user-year" class="form-control" style="background:#05120a;" required>
+                    <option value="1st Year">1st Year</option>
+                    <option value="2nd Year">2nd Year</option>
+                    <option value="3rd Year" selected>3rd Year</option>
+                    <option value="4th Year">4th Year</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="user-phone">Mobile / WhatsApp No.</label>
+                <div class="input-with-icon">
+                  <span class="input-icon">📱</span>
+                  <input type="tel" id="user-phone" class="form-control" placeholder="For prize notification">
+                </div>
+              </div>
+            </div>
+
+            <!-- Answer Quick Picker -->
+            <div class="form-group">
+              <label class="form-label">Select Your Answer: <span class="req">*</span></label>
+              <div class="answer-options">
+                <button type="button" class="answer-btn" data-value="1">1</button>
+                <button type="button" class="answer-btn" data-value="2">2</button>
+                <button type="button" class="answer-btn" data-value="3">3</button>
+                <button type="button" class="answer-btn" data-value="4">4</button>
+              </div>
+              <div class="input-with-icon">
+                <span class="input-icon">🔢</span>
+                <input type="number" id="ans-input" class="form-control" placeholder="Or enter exact output integer..." required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="user-explanation">Your Calculation / Steps (Optional)</label>
+              <textarea id="user-explanation" class="form-control" style="padding-left:1rem; min-height:60px;" placeholder="e.g. Total sum is 21 and sum(nums) is 18..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit-glow" id="btn-submit">
+              <span>🚀 Submit Answer &amp; Claim Pass</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Result / Digital Prize Pass Container (Initially Hidden) -->
+        <div id="result-pass-card" class="result-card">
+          <div class="pass-container">
+            <div class="pass-watermark">🌿</div>
+            
+            <div class="pass-header">
+              <div>
+                <div style="font-family: var(--font-display); font-weight:900; font-size:1.1rem; color: #fff;">TECHNODIAZ 2K26</div>
+                <div style="font-size:0.75rem; color: var(--neon-leaf);">CSE WALL MAGAZINE PARTICIPATION PASS</div>
+              </div>
+              <div id="pass-status-badge" class="pass-badge">VERIFIED</div>
+            </div>
+
+            <div class="pass-grid">
+              <div>
+                <div class="pass-info-item">
+                  <div class="label">Participant Name</div>
+                  <div class="val" id="pass-student-name">Aaditya</div>
+                </div>
+                <div class="pass-info-item">
+                  <div class="label">Roll Number &amp; Dept</div>
+                  <div class="val" id="pass-roll-no" style="font-size:0.95rem;">22CSE045</div>
+                  <div style="font-size:0.8rem; color:var(--text-muted);" id="pass-dept-year">CSE • 3rd Year</div>
+                </div>
+                <div class="pass-info-item">
+                  <div class="label">Submitted Output</div>
+                  <div class="val" style="color:var(--neon-green);" id="pass-submitted-ans">3</div>
+                </div>
+              </div>
+
+              <div class="pass-qr-box" id="pass-qr-code" title="Verification QR">
+                <!-- Dynamic QR code injected via js -->
+              </div>
+            </div>
+
+            <div class="pass-footer">
+              <div>
+                <span>Token ID: </span>
+                <strong id="pass-token-id" style="color:#ffffff;">TDZ-2601</strong>
+              </div>
+              <div id="pass-timestamp" style="font-size:0.75rem;">Just now</div>
+            </div>
+          </div>
+
+          <div class="btn-group-row">
+            <button type="button" class="btn-secondary" id="btn-print-pass">
+              🖨️ Print / Save Pass
+            </button>
+            <button type="button" class="btn-secondary" id="btn-submit-another">
+              🔄 Submit Another Entry
+            </button>
+          </div>
+          <p style="text-align:center; font-size:0.78rem; color:var(--text-muted); margin-top:0.75rem;">
+            Show this digital token at the TECHNODIAZ 2K26 CSE Department booth to claim your prize!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wall Magazine Highlights Section -->
+    <section class="magazine-showcase">
+      <div class="section-heading">
+        <h3>Technodiaz 2k26 Wall Magazine Highlights</h3>
+        <p>"Innovation flourishes where creativity meets sustainability"</p>
+      </div>
+
+      <div class="highlights-grid">
+        <div class="highlight-card">
+          <div class="highlight-icon">🌱</div>
+          <h4>Sustainable Computing</h4>
+          <p>Reduce E-waste, energy-efficient cloud architecture, paperless campus solutions, and green data centers.</p>
+        </div>
+
+        <div class="highlight-card">
+          <div class="highlight-icon">🤖</div>
+          <h4>AI For Good</h4>
+          <p>Leveraging artificial intelligence in climate prediction, wildlife conservation, smart farming, and renewable energy.</p>
+        </div>
+
+        <div class="highlight-card">
+          <div class="highlight-icon">💡</div>
+          <h4>Did You Know?</h4>
+          <p>A single search consumes 0.3 watt-hours of electricity! Small coding optimizations create huge global eco-impact.</p>
+        </div>
+
+        <div class="highlight-card">
+          <div class="highlight-icon">🏆</div>
+          <h4>Student Spotlight</h4>
+          <p>Featuring student innovations: Smart Irrigation System, Plant Disease Detection using AI, and Eco-Friendly Smart Bins.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span>🌿</span>
+          <span>TECHNODIAZ 2K26 • CSE DEPARTMENT</span>
+        </div>
+        <div class="footer-links">
+          <a href="#challenge">Coding Challenge</a>
+          <a href="qr-generator.html">Printable QR Badge</a>
+          <a href="admin.html">Organizer Portal</a>
+        </div>
+      </div>
+      <p style="text-align: center; margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-dim);">
+        Designed for the Department of Computer Science &amp; Engineering Wall Magazine Exhibition.
+      </p>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/qrcode.min.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

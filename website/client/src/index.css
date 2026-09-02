@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon-green: #10B981;
+  --neon-glow: rgba(16, 185, 129, 0.4);
+  --dark-bg: #060A07;
+}
+
+body {
+  background-color: #060A07;
+  color: #D9E8D0;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09100B;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1C3325;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #10B981;
+}
+
+/* Glassmorphism & Circuit Glow Cards */
+.glass-panel {
+  background: rgba(13, 23, 17, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(39, 62, 48, 0.6);
+}
+
+.glass-panel:hover {
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.2);
+}
+
+.wood-board {
+  background: linear-gradient(145deg, #131A15 0%, #0E1410 100%);
+  border: 1px solid #23382B;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.wood-board:hover {
+  border-color: #10B981;
+  box-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.9), 0 0 20px -3px rgba(16, 185, 129, 0.25);
+}
+
+/* Neon Text Glow */
+.text-neon-green {
+  color: #10B981;
+  text-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+}
+
+.text-neon-glow {
+  text-shadow: 0 0 18px rgba(74, 222, 128, 0.6);
+}
+
+/* Circuit trace line animation */
+.circuit-line {
+  stroke-dasharray: 8 4;
+  animation: circuitFlow 20s linear infinite;
+}
+
+@keyframes circuitFlow {
+  from {
+    stroke-dashoffset: 200;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Subtle particle dots grid */
+.tech-grid-bg {
+  background-image: radial-gradient(rgba(16, 185, 129, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Monospace code styling */
+code, pre, .font-code {
+  font-family: 'Fira Code', monospace;
+}

@@ -1,0 +1,15 @@
+{
+  "name": "qr-for-wall-magazine",
+  "version": "1.0.0",
+  "description": "> **Department of Computer Science & Engineering**   > *\"Where Nature Meets Innovation — The future is DIGITAL but its roots are GREEN\"*",
+  "main": "generate_assets.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "surge": "^0.44.0"
+  }
+}

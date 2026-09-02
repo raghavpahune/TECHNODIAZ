@@ -1,0 +1,11 @@
+{
+  "name": "technodiaz-2k26",
+  "version": "1.0.0",
+  "description": "TECHNODIAZ 2k26 - Where Nature Meets Innovation | PBCOE CSE",
+  "scripts": {
+    "start": "node run_all.js",
+    "dev": "node run_all.js",
+    "backend": "cd backend && npm start",
+    "frontend": "cd frontend && npm run dev"
+  }
+}

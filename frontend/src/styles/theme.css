@@ -1,0 +1,305 @@
+/* =========================================================
+   TECHNODIAZ 2k26 - NATURE MEETS INNOVATION DESIGN SYSTEM
+   Department of Computer Science & Engineering | PBCOE Nagpur
+   ========================================================= */
+
+:root {
+  /* Nature & Forest Palette */
+  --color-forest-950: #040d07;
+  --color-forest-900: #081a0e;
+  --color-forest-800: #0d2816;
+  --color-forest-700: #143d22;
+  --color-leaf-green: #2ecc71;
+  --color-leaf-bright: #39e75f;
+  --color-emerald: #10b981;
+  --color-mint: #6ee7b7;
+
+  /* Neon Circuit Accents */
+  --neon-green: #00ff88;
+  --neon-cyan: #00f0ff;
+  --neon-lime: #a6ff00;
+  --neon-glow: rgba(0, 255, 136, 0.45);
+  --neon-glow-strong: rgba(0, 255, 136, 0.85);
+
+  /* Earth & Wood Textures */
+  --wood-dark: #2a1810;
+  --wood-medium: #3d2314;
+  --wood-grain: #4a2d1a;
+  --wood-border: #633c21;
+  --wood-highlight: #84532e;
+  --wood-pin: #d4af37; /* Brass pin */
+  
+  /* Paper & Blackboard */
+  --board-paper: #fbf7ee;
+  --board-paper-dark: #f0e8d5;
+  --board-text: #1a221a;
+  --chalkboard-bg: #121c15;
+  --card-bg-glass: rgba(13, 40, 22, 0.75);
+
+  /* Fonts */
+  --font-heading: 'Cinzel', serif;
+  --font-brand: 'Syne', sans-serif;
+  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Shadows & Glows */
+  --glow-circuit: 0 0 15px rgba(0, 255, 136, 0.4), 0 0 30px rgba(0, 255, 136, 0.2);
+  --glow-circuit-cyan: 0 0 15px rgba(0, 240, 255, 0.4), 0 0 30px rgba(0, 240, 255, 0.2);
+  --wood-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.08), inset 0 -3px 6px rgba(0, 0, 0, 0.6);
+  --paper-shadow: 0 8px 20px rgba(0, 0, 0, 0.25), 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-forest-950);
+  color: #e5f5ea;
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+  background-image: 
+    radial-gradient(circle at 15% 20%, rgba(0, 255, 136, 0.07) 0%, transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
+    linear-gradient(180deg, #050f08 0%, #081a0e 50%, #030805 100%);
+  background-attachment: fixed;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #06120a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1b4d2e;
+  border-radius: 5px;
+  border: 2px solid #06120a;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-green);
+}
+
+/* =========================================================
+   WOODEN BOARD & PIN STYLING
+   ========================================================= */
+
+.wood-frame {
+  background: linear-gradient(145deg, var(--wood-medium), var(--wood-dark));
+  border: 4px solid var(--wood-border);
+  border-radius: 14px;
+  box-shadow: var(--wood-shadow);
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.wood-frame::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, rgba(0, 255, 136, 0.2), transparent, rgba(0, 255, 136, 0.2));
+  z-index: -1;
+  opacity: 0.6;
+}
+
+.wood-frame:hover {
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 255, 136, 0.25);
+}
+
+/* Brass Pins in Corners */
+.brass-pin {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle at 35% 35%, #fff1a8 0%, #d4af37 50%, #8a6a1a 100%);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.8);
+  z-index: 10;
+}
+.pin-tl { top: 8px; left: 8px; }
+.pin-tr { top: 8px; right: 8px; }
+.pin-bl { bottom: 8px; left: 8px; }
+.pin-br { bottom: 8px; right: 8px; }
+
+/* Notice Paper Styles */
+.notice-paper {
+  background: var(--board-paper);
+  color: var(--board-text);
+  border-radius: 8px;
+  box-shadow: var(--paper-shadow);
+  position: relative;
+  background-image: radial-gradient(#d3c9b4 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.chalkboard {
+  background: var(--chalkboard-bg);
+  border: 2px solid #1e3a29;
+  border-radius: 10px;
+  color: #e2f5e7;
+}
+
+/* =========================================================
+   CIRCUITS & GLOWS
+   ========================================================= */
+
+.neon-text-green {
+  color: var(--neon-green);
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.6), 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.neon-text-cyan {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.6), 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+.neon-border-green {
+  border-color: var(--neon-green);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.35);
+}
+
+.circuit-grid-bg {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 255, 136, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
+}
+
+/* LED Strip Border Pulse */
+@keyframes ledPulse {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(0, 255, 136, 0.4), inset 0 0 8px rgba(0, 255, 136, 0.2);
+    border-color: rgba(0, 255, 136, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.8), inset 0 0 15px rgba(0, 255, 136, 0.4);
+    border-color: var(--neon-green);
+  }
+}
+
+.led-glowing-border {
+  animation: ledPulse 3s infinite ease-in-out;
+}
+
+/* Foliage Vine Garland Simulation */
+.leaf-garland {
+  position: relative;
+}
+
+.leaf-garland::before {
+  content: '🌿 🍃 🌿 🍃 🌿 🍃 🌿 🍃 🌿 🍃 🌿 🍃 🌿';
+  position: absolute;
+  top: -14px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.95rem;
+  letter-spacing: 4px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.9;
+}
+
+/* =========================================================
+   ANIMATIONS & PARTICLES
+   ========================================================= */
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+
+.animate-float {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes circuitRun {
+  0% { stroke-dashoffset: 100; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.circuit-path {
+  stroke-dasharray: 20, 10;
+  animation: circuitRun 4s linear infinite;
+}
+
+/* Button & Interactive styles */
+.btn-nature-primary {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #031c0d;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 9999px;
+  border: 1px solid var(--neon-green);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  font-family: var(--font-body);
+}
+
+.btn-nature-primary:hover {
+  background: linear-gradient(135deg, var(--neon-green) 0%, #10b981 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.7);
+}
+
+.btn-nature-wood {
+  background: linear-gradient(135deg, var(--wood-medium) 0%, var(--wood-dark) 100%);
+  color: #e5f5ea;
+  border: 1px solid var(--wood-highlight);
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-nature-wood:hover {
+  border-color: var(--neon-green);
+  color: var(--neon-green);
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
+}
+
+/* Glass Panels */
+.glass-panel {
+  background: rgba(8, 26, 14, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 12px;
+}
+
+/* Responsive Containers */
+.container-custom {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}

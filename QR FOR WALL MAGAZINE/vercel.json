@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "technodiaz-2k26-wall-magazine",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
+}

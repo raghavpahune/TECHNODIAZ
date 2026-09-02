@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin &amp; Organizer Dashboard | TECHNODIAZ 2K26</title>
+  <meta name="description" content="Organizer & Faculty evaluation portal for Technodiaz 2k26 Wall Magazine Coding Challenge submissions.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+</head>
+<body>
+  <div class="circuit-overlay"></div>
+  <div class="ambient-glow-tree"></div>
+
+  <div class="container">
+    <!-- Navbar -->
+    <header class="navbar">
+      <a href="index.html" class="nav-brand">
+        <img src="assets/technodiaz_tree.jpg" alt="Technodiaz Tree Logo" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--border-neon); object-fit: cover;">
+        <div class="nav-title-group">
+          <h1>TECHNODIAZ 2K26</h1>
+          <p>Dept. of Computer Science &amp; Engineering</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-btn">← Participant Portal</a>
+        <a href="qr-generator.html" class="nav-btn">Wall QR Code</a>
+        <a href="admin.html" class="nav-btn active">Admin Portal</a>
+      </nav>
+    </header>
+
+    <!-- Passcode Authentication Gate (Shown if not logged in) -->
+    <div id="admin-auth-gate" style="display: flex; min-height: 60vh; align-items: center; justify-content: center; padding: 2rem 0;">
+      <div class="glass-card" style="max-width: 440px; width: 100%; text-align: center;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔒</div>
+        <h3 class="card-title" style="margin-bottom: 0.5rem;">Organizer Access</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem;">
+          Enter the faculty / coordinator passcode to access live submissions and winner drawing.
+        </p>
+
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label" for="admin-passcode">Coordinator Passcode</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🔑</span>
+            <input type="password" id="admin-passcode" class="form-control" placeholder="Enter passcode (default: technodiaz2026)">
+          </div>
+          <div id="auth-error-msg" style="color: #f87171; font-size: 0.8rem; margin-top: 6px; display: none;"></div>
+        </div>
+
+        <button type="button" class="btn-submit-glow" id="btn-admin-login" style="margin-top: 1rem;">
+          <span>Unlock Dashboard</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Admin Dashboard Content (Shown after login) -->
+    <div id="admin-main-content" style="display: none; padding: 2.5rem 0 4rem;">
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+        <div>
+          <div class="badge-tag" style="margin-bottom: 0.5rem;">ORGANIZER DASHBOARD</div>
+          <h2 class="hero-title" style="font-size: 2.2rem; margin-bottom: 0;">
+            Submission <span class="glow-green">Analytics</span>
+          </h2>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button type="button" class="btn-secondary" id="btn-export-csv">
+            📊 Export to CSV
+          </button>
+          <button type="button" class="btn-submit-glow" id="btn-open-raffle" style="width: auto; padding: 0.65rem 1.25rem; font-size: 0.88rem;">
+            🎁 Spin Lucky Winner
+          </button>
+          <button type="button" class="btn-secondary" id="btn-admin-logout" style="color: #f87171;">
+            🚪 Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- Overview Stats Grid -->
+      <div class="admin-stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div>
+            <div class="stat-number" id="stat-total-submissions">0</div>
+            <div class="stat-label">Total Submissions</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="color: var(--neon-green);">✓</div>
+          <div>
+            <div class="stat-number" id="stat-correct-answers" style="color: var(--neon-green);">0</div>
+            <div class="stat-label">Correct (Output = 3)</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="color: var(--neon-cyan);">🎯</div>
+          <div>
+            <div class="stat-number" id="stat-accuracy-rate">0%</div>
+            <div class="stat-label">Accuracy Rate</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="color: var(--accent-gold);">🏆</div>
+          <div>
+            <div class="stat-number" id="stat-top-dept" style="font-size: 1.3rem;">CSE</div>
+            <div class="stat-label">Top Branch</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submissions Table Card -->
+      <div class="glass-card">
+        <div class="card-header" style="flex-wrap: wrap; gap: 1rem;">
+          <div class="card-title-group">
+            <div class="card-title-icon">📋</div>
+            <div>
+              <h3 class="card-title">Participant Entries</h3>
+              <p style="font-size: 0.8rem; color: var(--neon-leaf);">Live chronological submissions feed</p>
+            </div>
+          </div>
+          <span class="card-badge" id="table-count-badge">0 Records</span>
+        </div>
+
+        <!-- Filter Controls -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+          <div class="input-with-icon">
+            <span class="input-icon">🔍</span>
+            <input type="text" id="search-participants" class="form-control" placeholder="Search by student name, roll number, or token ID...">
+          </div>
+
+          <select id="filter-dept" class="form-control" style="background:#05120a; padding-left: 1rem;">
+            <option value="ALL">All Departments</option>
+            <option value="CSE">CSE</option>
+            <option value="AI & ML">AI & ML</option>
+            <option value="IT">IT</option>
+            <option value="Data Science">Data Science</option>
+            <option value="ECE">ECE</option>
+            <option value="EEE">EEE</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <select id="filter-status" class="form-control" style="background:#05120a; padding-left: 1rem;">
+            <option value="ALL">All Results</option>
+            <option value="CORRECT">Correct Only (3)</option>
+            <option value="INCORRECT">Incorrect Only</option>
+          </select>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Student Name</th>
+                <th>Roll No</th>
+                <th>Dept &amp; Year</th>
+                <th>Answer</th>
+                <th>Submitted At</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="submissions-tbody">
+              <!-- Dynamically rendered rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Reset option -->
+        <div style="margin-top: 1.5rem; text-align: right;">
+          <button type="button" id="btn-clear-data" style="background: none; border: none; color: #64748b; font-size: 0.78rem; cursor: pointer; text-decoration: underline;">
+            Reset all participant data
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Winner Raffle Modal -->
+    <div class="modal-overlay" id="raffle-modal">
+      <div class="raffle-modal-box">
+        <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">🎉</div>
+        <h3 style="font-family: var(--font-display); font-size: 1.6rem; color: #ffffff;">Lucky Winner Raffle Draw</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem;">
+          Selecting randomly among <strong id="raffle-eligible-count" style="color: var(--neon-green);">0</strong> verified correct participants.
+        </p>
+
+        <div class="raffle-slot-roller" id="raffle-roller">
+          READY TO DRAW
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: center;">
+          <button type="button" class="btn-submit-glow" id="btn-spin-raffle" style="width: auto; padding: 0.75rem 2rem;">
+            🎲 Spin Now!
+          </button>
+          <button type="button" class="btn-secondary" onclick="closeRaffleModal()" style="flex: none; padding: 0.75rem 1.5rem;">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submission Details Modal -->
+    <div class="modal-overlay" id="detail-modal">
+      <div class="raffle-modal-box" style="border-color: var(--neon-green); max-width: 500px;">
+        <h3 style="font-family: var(--font-display); font-size: 1.3rem; color: #ffffff; margin-bottom: 1rem;">
+          Submission Verification
+        </h3>
+        <div id="detail-modal-body">
+          <!-- Dynamic details content -->
+        </div>
+        <div style="margin-top: 1.5rem;">
+          <button type="button" class="btn-secondary" onclick="closeDetailModal()" style="width: 100%;">
+            Close Window
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span>🌿</span>
+          <span>TECHNODIAZ 2K26 • CSE DEPARTMENT</span>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Participant Portal</a>
+          <a href="qr-generator.html">Printable QR Badge</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/confetti.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
